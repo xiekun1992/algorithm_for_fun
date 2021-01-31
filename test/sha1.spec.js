@@ -12,39 +12,31 @@ describe('SHA1', () => {
     const buf = Buffer.alloc(0)
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
-  it('1 bits buffer', () => {
+  it('1 byte buffer', () => {
     const buf = Buffer.alloc(1, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
-  it('448 bits buffer', () => {
+  it('56 bytes buffer', () => {
     const buf = Buffer.alloc(448, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
-  it('511 bits buffer', () => {
-    const buf = Buffer.alloc(511, Math.random())
-    assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
-  })
-  it('512 bits buffer', () => {
+  it('64 bytes buffer', () => {
     const buf = Buffer.alloc(512, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
-  it('513 bits buffer', () => {
-    const buf = Buffer.alloc(513, Math.random())
+  it('65 bytes buffer', () => {
+    const buf = Buffer.alloc(520, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
-  it('1023 bits buffer', () => {
-    const buf = Buffer.alloc(1023, Math.random())
+  it('128 bytes buffer', () => {
+    const buf = Buffer.alloc(128, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
-  it('1024 bits buffer', () => {
-    const buf = Buffer.alloc(1024, Math.random())
-    assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
-  })
-  it('1M bits buffer', () => {
+  it('1M bytes buffer', () => {
     const buf = Buffer.alloc(1024 * 1024, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
-  it('10M bits buffer', () => {
+  it('10M bytes buffer', () => {
     const buf = Buffer.alloc(10 * 1024 * 1024, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
