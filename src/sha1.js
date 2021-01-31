@@ -13,7 +13,7 @@ function sha1(buf) {
     K[2] = 0x8F1BBCDC
     K[3] = 0xCA62C1D6
     
-    //<--------- padding message---------->
+    // <--------- padding message---------->
     let padBuf
     const lastGroupBits = buf.length * 8 % 512
     const deltaBytes = (lastGroupBits - 440) / 8
@@ -29,7 +29,7 @@ function sha1(buf) {
     for (let i = 0; i < padBuf.length / 64; i++) {
         oneTurn(padBuf.slice(i * 64, (i + 1) * 64))
     }
-    
+    // <------------ output -------------->
     return padHex(H[0]) + padHex(H[1]) + padHex(H[2]) + padHex(H[3]) + padHex(H[4])
 }
 function oneTurn(buf) {
