@@ -16,16 +16,20 @@ describe('SHA1', () => {
     const buf = Buffer.alloc(1, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
+  it('55 bytes buffer', () => {
+    const buf = Buffer.alloc(55, Math.random())
+    assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
+  })
   it('56 bytes buffer', () => {
-    const buf = Buffer.alloc(448, Math.random())
+    const buf = Buffer.alloc(56, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
   it('64 bytes buffer', () => {
-    const buf = Buffer.alloc(512, Math.random())
+    const buf = Buffer.alloc(64, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
   it('65 bytes buffer', () => {
-    const buf = Buffer.alloc(520, Math.random())
+    const buf = Buffer.alloc(65, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
   it('128 bytes buffer', () => {

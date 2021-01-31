@@ -19,13 +19,12 @@ function sha1(buf) {
     const deltaBytes = (lastGroupBits - 440) / 8
     if (deltaBytes > 0) { // (440, 512)
         padBuf = Buffer.concat([buf, Buffer.from([0b10000000]), Buffer.alloc(64 - deltaBytes), Buffer.alloc(8)])
-        padBuf.writeBigUInt64BE(BigInt(buf.length * 8), padBuf.length - 8)
     } else if (deltaBytes < 0) {
         padBuf = Buffer.concat([buf, Buffer.from([0b10000000]), Buffer.alloc(-deltaBytes), Buffer.alloc(8)])
-        padBuf.writeBigUInt64BE(BigInt(buf.length * 8), padBuf.length - 8)
     } else {
-        padBuf = buf
+        padBuf = Buffer.concat([buf, Buffer.from([0b10000000]), Buffer.alloc(8)])
     }
+    padBuf.writeBigUInt64BE(BigInt(buf.length * 8), padBuf.length - 8)
     // <------------ groups -------------->
     for (let i = 0; i < padBuf.length / 64; i++) {
         // console.log(H, padBuf.slice(i * 64, 64))
