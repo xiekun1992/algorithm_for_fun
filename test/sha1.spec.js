@@ -1,6 +1,6 @@
 const assert = require('assert')
 const crypto = require('crypto')
-const { sha1: xksha1 } = require('../../sha1')
+const { sha1: xksha1 } = require('../src/sha1')
 
 describe('SHA1', () => {
   let sha1
