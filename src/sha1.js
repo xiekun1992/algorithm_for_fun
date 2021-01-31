@@ -49,22 +49,6 @@ function oneTurn(buf) {
     ABCDE[3] = H[3]
     ABCDE[4] = H[4]
     
-    function k(t) {
-        if(t <= 19) return K[0] // (0, 19)
-        else if(20 <= t && t <= 39) return K[1] // (20, 39)
-        else if(40 <= t && t <= 59) return K[2] // (40, 59)
-        else return K[3] // (60, 79)
-    }
-    function f(t, B, C, D) {
-        if(t <= 19) return (B & C) | ((0xffffffff ^ B) & D) // (0, 19)
-        else if(20 <= t && t <= 39) return B ^ C ^ D // (20, 39)
-        else if(40 <= t && t <= 59) return (B & C) | (B & D) | (C & D) // (40, 59)
-        else return B ^ C ^ D // (60, 79)
-    }
-    function s(bits, number) {
-        return (number << bits) | (number >>> (32 - bits))
-    }
-    
     for (let i = 0; i <= 79; i++) {
         const temp = s(5, ABCDE[0]) + f(i, ABCDE[1], ABCDE[2], ABCDE[3]) + ABCDE[4] + groups80[i] + k(i)
 
@@ -82,6 +66,21 @@ function oneTurn(buf) {
     H[4] = H[4] + ABCDE[4]
 
     return H
+}
+function k(t) {
+    if(t <= 19) return K[0] // (0, 19)
+    else if(20 <= t && t <= 39) return K[1] // (20, 39)
+    else if(40 <= t && t <= 59) return K[2] // (40, 59)
+    else return K[3] // (60, 79)
+}
+function f(t, B, C, D) {
+    if(t <= 19) return (B & C) | ((0xffffffff ^ B) & D) // (0, 19)
+    else if(20 <= t && t <= 39) return B ^ C ^ D // (20, 39)
+    else if(40 <= t && t <= 59) return (B & C) | (B & D) | (C & D) // (40, 59)
+    else return B ^ C ^ D // (60, 79)
+}
+function s(bits, number) {
+    return (number << bits) | (number >>> (32 - bits))
 }
 function padHex(num) {
     return num.toString(16).padStart(8, 0)
