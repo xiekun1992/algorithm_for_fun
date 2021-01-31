@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha ./test/**/*.spec.js"
+    "test": "nyc mocha ./test/**/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/xiekun1992/algorithm_for_fun#readme",
   "devDependencies": {
-    "mocha": "^8.2.1"
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0"
   }
 }

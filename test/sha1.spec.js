@@ -40,8 +40,10 @@ describe('SHA1', () => {
     const buf = Buffer.alloc(1024 * 1024, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
   })
-  it('10M bytes buffer', () => {
+  it('10M bytes buffer', function(done) {
+    this.timeout(10000)
     const buf = Buffer.alloc(10 * 1024 * 1024, Math.random())
     assert.equal.apply(null, calcHelper(buf, sha1, xsha1))
+    done()
   })
 })
