@@ -1,0 +1,26 @@
+{
+  "name": "algorithm_for_fun",
+  "version": "1.0.0",
+  "description": "write some common algorithms myself",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha ./test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiekun1992/algorithm_for_fun.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiekun1992/algorithm_for_fun/issues"
+  },
+  "homepage": "https://github.com/xiekun1992/algorithm_for_fun#readme",
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  }
+}
