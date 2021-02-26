@@ -1,50 +1,50 @@
 // 支持浏览器和nodejs中通用，并且处理超过1GB的大文件计算
 // 准备初始数据和空间
-const T = new Int32Array(65) // 浪费第一个4字节
-for (let i = 1; i <= 64; i++) {
+var T = new Int32Array(65) // 浪费第一个4字节
+for (var i = 1; i <= 64; i++) {
   T[i] = Math.floor(4294967296 * Math.abs(Math.sin(i)))
 }
-const maxInt = 4294967296
-let A, B, C, D
+var maxInt = 4294967296
+var A, B, C, D
 
-let X = []
+var X = []
 function md5(input) { // input是4字节整型数组
   A = 0x67452301
   B = 0xefcdab89
   C = 0x98badcfe
   D = 0x10325476
   // 计算padding所需大小
-  const N0 = Math.floor(input.byteLength / 64)
-    // console.log('N0=', N0)
-  const tmp = new Uint8Array(input)
+  var N0 = Math.floor(input.byteLength / 64)
+  //  console.log('N0=', N0)
+  var tmp = new Uint8Array(input)
   // 先处理完整的分组
-  for (let i = 0; i < N0 * 64; i += 64) {
-    const group = new Int32Array(16)
-    const tmpBytesGroup = tmp.subarray(i, i + 64)
-    for (let j = 0; j < group.length; j++) {
-      const tmp1 = (tmpBytesGroup[j * 4] * Math.pow(2, 24)) + (tmpBytesGroup[j * 4 + 1] * Math.pow(2, 16)) + (tmpBytesGroup[j * 4 + 2] * Math.pow(2, 8)) + tmpBytesGroup[j * 4 + 3]
+  for (var i = 0; i < N0 * 64; i += 64) {
+    var group = new Int32Array(16)
+    var tmpBytesGroup = tmp.subarray(i, i + 64)
+    for (var j = 0; j < group.length; j++) {
+      var tmp1 = (tmpBytesGroup[j * 4] * Math.pow(2, 24)) + (tmpBytesGroup[j * 4 + 1] * Math.pow(2, 16)) + (tmpBytesGroup[j * 4 + 2] * Math.pow(2, 8)) + tmpBytesGroup[j * 4 + 3]
       group[j] = (tmp1 >>> 24) & 0xff | (tmp1 >>> 8) & 0xff00 | ((tmp1 & 0xff00) << 8) | ((tmp1 & 0xff) << 24)
     }
-    // const st = performance.now()
+    // var st = performance.now()
     md5GroupCalc(group)
     // console.log(i, 'group', performance.now() - st)
   }
   // 再处理padding的分组
-  const lastGroupBytes = input.byteLength % 64 // 每组16个4字节整数
-  const padBytes = 55 - lastGroupBytes
+  var lastGroupBytes = input.byteLength % 64 // 每组16个4字节整数
+  var padBytes = 55 - lastGroupBytes
 
-  const inputBits = input.byteLength * 8
-  const padGroups = []
+  var inputBits = input.byteLength * 8
+  var padGroups = []
   if (padBytes > 0) {
     //  console.log('padBytes > 0')
     // existBytes + 0x80 + padBytes + 8
-    const tmpInt8Array = new Int8Array(64)
-    const last = tmp.subarray(N0 * 64)
+    var tmpInt8Array = new Int8Array(64)
+    var last = tmp.subarray(N0 * 64)
     tmpInt8Array.set(last, 0)
     tmpInt8Array[last.length] = 0x80
     writeInputBitsLength(tmpInt8Array, inputBits)
     //  console.log(tmpInt8Array)
-    const group = new Int32Array(tmpInt8Array.buffer)
+    var group = new Int32Array(tmpInt8Array.buffer)
     group[group.length - 2] = inputBits
 
     //  console.log(group)
@@ -52,33 +52,33 @@ function md5(input) { // input是4字节整型数组
   } else if (padBytes < 0) {
     //  console.log('padBytes < 0')
     // existBytes + 0x80 + -padBytes + 64 + 8 两个分组
-    const tmpInt8Array = new Int8Array(64)
-    const last = tmp.subarray(N0 * 64)
+    var tmpInt8Array = new Int8Array(64)
+    var last = tmp.subarray(N0 * 64)
     tmpInt8Array.set(last, 0)
     tmpInt8Array[last.length] = 0x80
-    const group1 = new Int32Array(tmpInt8Array.buffer)
+    var group1 = new Int32Array(tmpInt8Array.buffer)
     
-    const tmpGroup2 = new Int8Array(64)
+    var tmpGroup2 = new Int8Array(64)
     writeInputBitsLength(tmpGroup2, inputBits)
-    const group2 = new Int32Array(tmpGroup2.buffer)
+    var group2 = new Int32Array(tmpGroup2.buffer)
     group2[group2.length - 2] = inputBits
 
     padGroups.push(group1, group2)
   } else {
     //  console.log('padBytes == 0')
     // 0x80 + 8
-    const tmpInt8Array = new Int8Array(64)
-    const last = tmp.subarray(N0 * 64)
+    var tmpInt8Array = new Int8Array(64)
+    var last = tmp.subarray(N0 * 64)
     tmpInt8Array.set(last, 0)
     tmpInt8Array[last.length] = 0x80
     writeInputBitsLength(tmpInt8Array, inputBits)
     
-    const group = new Int32Array(tmpInt8Array.buffer)
+    var group = new Int32Array(tmpInt8Array.buffer)
     group[group.length - 2] = inputBits
 
     padGroups.push(group)
   }
-  for (let i = 0; i < padGroups.length; i++) {
+  for (var i = 0; i < padGroups.length; i++) {
     md5GroupCalc(padGroups[i])
   }
 
@@ -86,8 +86,8 @@ function md5(input) { // input是4字节整型数组
 }
 function writeInputBitsLength(group, inputBits) {
   //  console.log(inputBits)
-  const highPosValue = inputBits / maxInt
-  const lowPosValue = inputBits % maxInt
+  var highPosValue = inputBits / maxInt
+  var lowPosValue = inputBits % maxInt
 
   group[group.length - 8] = lowPosValue & 0xff
   group[group.length - 7] = (lowPosValue & 0xff00) >>> (1 * 8)
@@ -101,10 +101,10 @@ function writeInputBitsLength(group, inputBits) {
 }
 function md5GroupCalc(group) {
   X = group
-  let AA = A
-  let BB = B
-  let CC = C
-  let DD = D
+  var AA = A
+  var BB = B
+  var CC = C
+  var DD = D
   // round 1
   A = round1(A, B, C, D, 0, 7, 1)
   D = round1(D, A, B, C, 1, 12, 2)
@@ -195,19 +195,19 @@ function md5GroupCalc(group) {
   D = D + DD
 }
 function round1(A, B, C, D, k, s, i) {
-  const tmp = (A + F(B, C, D) + X[k] + T[i])
+  var tmp = (A + F(B, C, D) + X[k] + T[i])
   return (B + circularShiftLeft(tmp, s)) & 0xffffffff
 }
 function round2(A, B, C, D, k, s, i) {
-  const tmp = (A + G(B, C, D) + X[k] + T[i])
+  var tmp = (A + G(B, C, D) + X[k] + T[i])
   return (B + circularShiftLeft(tmp, s)) & 0xffffffff
 }
 function round3(A, B, C, D, k, s, i) {
-  const tmp = (A + H(B, C, D) + X[k] + T[i])
+  var tmp = (A + H(B, C, D) + X[k] + T[i])
   return (B + circularShiftLeft(tmp, s)) & 0xffffffff
 }
 function round4(A, B, C, D, k, s, i) {
-  const tmp = (A + I(B, C, D) + X[k] + T[i])
+  var tmp = (A + I(B, C, D) + X[k] + T[i])
   return (B + circularShiftLeft(tmp, s)) & 0xffffffff
 }
 function circularShiftLeft(value, shiftBits) {
@@ -230,7 +230,7 @@ function lowOrderOutput(num) {
   return padHex(num & 0xff) + padHex((num >>> 8) & 0xff) + padHex((num >>> 16) & 0xff) + padHex((num >>> 24) & 0xff)
 }
 function padHex(num) {
-  const tmp = num.toString(16)
+  var tmp = num.toString(16)
   if (tmp.length < 2) {
     return '0' + tmp
   }
