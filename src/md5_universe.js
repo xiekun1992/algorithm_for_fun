@@ -15,7 +15,7 @@ function md5(input) { // input是4字节整型数组
   D = 0x10325476
   // 计算padding所需大小
   const N0 = Math.floor(input.byteLength / 64)
-    console.log('N0=', N0)
+    // console.log('N0=', N0)
   const tmp = new Uint8Array(input)
   // 先处理完整的分组
   for (let i = 0; i < N0 * 64; i += 64) {
