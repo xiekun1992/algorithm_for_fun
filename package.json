@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "nyc mocha ./test/**/*.spec.js"
+    "test:unit": "nyc mocha ./test/unit/**/*.spec.js",
+    "test:benchmark": "node ./test/benchmark/md5_wasm.spec.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/xiekun1992/algorithm_for_fun#readme",
   "devDependencies": {
+    "benchmark": "^2.1.4",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0"
   }

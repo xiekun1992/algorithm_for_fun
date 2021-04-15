@@ -1,9 +1,9 @@
 const assert = require('assert')
 const crypto = require('crypto')
-const { md5: xmd5 } = require('../src/md5')
+const { md5: xmd5 } = require('../../src/js/md5_universe')
 const { calcHelper } = require('./helper')
 
-describe('MD5', () => {
+describe('MD5_UNIVERSE', () => {
   let md5
   beforeEach(() => {
     md5 = crypto.createHash('md5')
