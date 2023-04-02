@@ -1,0 +1,4 @@
+# coverage config file, see: https://github.com/istanbuljs/nyc#selecting-files-for-coverage
+exclude:
+  - src/wasm/**/*_wrapper.js
+  - test/**/*.js
