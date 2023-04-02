@@ -1,6 +1,6 @@
 const assert = require('assert')
 const crypto = require('crypto')
-const { sha1: xsha1 } = require('../src/sha1')
+const { sha1: xsha1 } = require('../src/cryptographics/sha1')
 const { calcHelper } = require('./helper')
 
 describe('SHA1', () => {

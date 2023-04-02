@@ -1,6 +1,6 @@
 const assert = require('assert')
 const crypto = require('crypto')
-const { md5: xmd5 } = require('../src/md5')
+const { md5: xmd5 } = require('../src/cryptographics/md5')
 const { calcHelper } = require('./helper')
 
 describe('MD5', () => {
