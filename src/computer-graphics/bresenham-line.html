@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bresenham Line</title>
+  <style>
+    body {margin: 0;}
+  </style>
+</head>
+<body>
+  <script>
+    const canvas = document.createElement('canvas')
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    document.body.append(canvas)
+
+    const st = performance.now()
+
+    const ctx = canvas.getContext('2d')
+    const imgData = ctx.createImageData(canvas.width, canvas.height)
+
+    function drawPoint(x, y) {
+      const i = ((y) * imgData.width + x) * 4;
+      imgData.data[i] = 0xff
+      imgData.data[i + 1] = 0x00
+      imgData.data[i + 2] = 0x00
+      imgData.data[i + 3] = 0xff
+    }
+
+    function drawLine(x0, y0, x1, y1) {
+      const steep = Math.abs(y1 - y0) > Math.abs(x1 - x0)
+      if (steep) {
+        let tmp
+        tmp = x0
+        x0 = y0
+        y0 = tmp
+        // [x0, y0] = [y0, x0]
+        tmp = x1
+        x1 = y1
+        y1 = tmp
+        // [x1, y1] = [y1, x1]
+      }
+      if (x0 > x1) {
+        let tmp
+        tmp = x0
+        x0 = x1
+        x1 = tmp
+        // [x0, x1] = [x1, x0]
+        tmp = y0
+        y0 = y1
+        y1 = tmp
+        // [y0, y1] = [y1, y0]
+      }
+      const dx = x1 - x0
+      const dy = Math.abs(y1 - y0)
+      const deltaErr = dy
+      let err = 0, ystep
+      if (y1 > y0) {
+        ystep = 1
+      } else {
+        ystep = -1
+      }
+
+      let x = x0, y = y0
+      while (x <= x1) {
+        if (steep) {
+          drawPoint(y, x)
+        } else {
+          drawPoint(x, y)
+        }
+        err += deltaErr
+        if (err >= 0.5 * dx) {
+          err -= dx
+          y += ystep
+        }
+
+        x++
+      }
+    }
+
+    // drawLine(100, 100, 200, 200)
+    // drawLine(100, 200, 200, 100)
+    // drawLine(100, 50, 200, 200)
+    // drawLine(100, 200, 200, 50)
+    // drawLine(100, 10, 200, 50)
+    // drawLine(908, 0, 100, 600)
+    // drawLine(90, 1, 90, 600)
+    // drawLine(190, 1, 90, 1)
+
+
+    // draw rect
+    drawLine(100, 100, 300, 100)
+    drawLine(300, 100, 300, 200)
+    drawLine(100, 200, 300, 200)
+    drawLine(100, 100, 100, 200)
+
+    ctx.putImageData(imgData, 0, 0)
+  </script>
+</body>
+</html>

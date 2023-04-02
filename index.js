@@ -1,4 +1,5 @@
-const { md5 } = require('./src/md5_universe')
+const { md5 } = require('./src/wasm/md5')
+// const { md5 } = require('./src/cryptographics/md5_universe')
 const {performance} = require('perf_hooks')
 const st = performance.now()
 
